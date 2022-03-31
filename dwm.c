@@ -2242,6 +2242,8 @@ wintomon(Window w)
 
 /* Selects for the view of the focused window. The list of tags */
 /* to be displayed is matched to the focused window tag list. */
+
+const static Arg SwapViewArg = { .ui = 0 };
 void
 winview(const Arg* arg){
 	Window win, win_r, win_p, *win_c;
@@ -2257,6 +2259,7 @@ winview(const Arg* arg){
 	if (!(c = wintoclient(win))) return;
 
 	a.ui = c->tags;
+	view(&SwapViewArg);
 	view(&a);
 }
 

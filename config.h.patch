@@ -76,7 +76,7 @@
 +	                                            TICKET_TAG,   0,           -1 },
 +	{ "firefox",   "Navigator",  "JIG board - Agile board",
 +	                                            TICKET_TAG,   0,           -1 },
-+	{ "firefox",   "Navigator",  "Inbox - npummeroy@atlassian.com",
++	{ "firefox",   "Navigator",  "Inbox - epummeroy@atlassian.com",
 +	                                            ORG_TAG,      1,           -1 },
 +	{ "firefox",   "Navigator",  "Calendar",    ORG_TAG,      1,           -1 },
 +	{ "Alacritty", NULL,         MUSIC_TITLE,   DASH_TAG,     1,           -1 },
