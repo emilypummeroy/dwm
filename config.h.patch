@@ -1,5 +1,5 @@
 --- config.def.h	2022-04-01 10:50:32.583206925 +1100
-+++ config.h	2023-01-20 11:30:16.456721067 +1100
++++ config.h	2023-01-24 11:29:06.101539716 +1100
 @@ -1,25 +1,26 @@
  /* See LICENSE file for copyright and license details. */
  
@@ -148,7 +148,7 @@
 -	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 +	/* Basic tasks */
 +	{ MODKEY,                       XK_q,      spawn,          {.v = lockcmd } },
-+	{ MODKEY,                       XK_space,  spawn,          {.v = dmenucmd } },
++	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
 +	{ MODKEY|ALTKEY,                XK_q,      quit,           {0} },
 +
 +	/* Spawn */
@@ -200,7 +200,7 @@
 +
 +	/* Window Manipulation */
 +	{ MODKEY|ShiftMask,             XK_w,      killclient,     {0} },
-+	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
++	{ MODKEY|ShiftMask,             XK_v,      togglefloating, {0} },
 +	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
  	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
  	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
