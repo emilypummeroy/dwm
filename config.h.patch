@@ -1,5 +1,5 @@
---- config.def.h	2022-04-01 10:50:32.583206925 +1100
-+++ config.h	2023-01-24 11:29:06.101539716 +1100
+--- config.def.h	2023-01-25 16:35:15.586580716 +1100
++++ config.h	2023-02-10 17:44:56.038754888 +1100
 @@ -1,25 +1,26 @@
  /* See LICENSE file for copyright and license details. */
  
@@ -42,7 +42,7 @@
  };
  static const unsigned int alphas[][3]      = {
  	/*               fg      bg        border     */
-@@ -31,14 +32,40 @@
+@@ -31,14 +32,34 @@
  /* tagging */
  static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
  
@@ -53,10 +53,11 @@
 +#define MUSIC_TITLE "music"
 +#define MIXER_TITLE "mixer"
 +#define NET_TITLE "network"
++#define DEV_TITLE "devices"
 +#define DASH_TAG (1 << 8)
 +#define ORG_TAG (1 << 7)
-+#define TICKET_TAG (1 << 6)
-+#define MAIN_TAGS ~(DASH_TAG | ORG_TAG | TICKET_TAG)
++#define WORK_TAG (1 << 6)
++#define MAIN_TAGS ~(DASH_TAG | ORG_TAG | WORK_TAG)
  static const Rule rules[] = {
  	/* xprop(1):
  	 *	WM_CLASS(STRING) = instance, class
@@ -72,30 +73,24 @@
 +	{ "Alacritty", NULL,         FILES_TITLE,   0,            1,           -1 },
 +	{ "Slack",     NULL,         NULL,          1 << 1,       0,           -1 },
 +	{ "Alacritty", NULL,         EDITOR_TITLE,  0,            1,           -1 },
-+	{ "firefox",   "Navigator",  "JSM Ignition Service Desk",
-+	                                            TICKET_TAG,   0,           -1 },
-+	{ "firefox",   "Navigator",  "JIG board - Agile board",
-+	                                            TICKET_TAG,   0,           -1 },
-+	{ "firefox",   "Navigator",  "Inbox - epummeroy@atlassian.com",
-+	                                            ORG_TAG,      1,           -1 },
-+	{ "firefox",   "Navigator",  "Calendar",    ORG_TAG,      1,           -1 },
 +	{ "Alacritty", NULL,         MUSIC_TITLE,   DASH_TAG,     1,           -1 },
 +	{ "Alacritty", NULL,         MIXER_TITLE,   DASH_TAG,     1,           -1 },
 +	{ "Alacritty", NULL,         NET_TITLE,     DASH_TAG,     1,           -1 },
-+	{ "Spotify",   NULL,         NULL,          DASH_TAG,     1,           -1 },
++	{ "Alacritty", NULL,         DEV_TITLE,     DASH_TAG,     1,           -1 },
  };
  
  #include "gaplessgrid.c"
-@@ -49,60 +76,104 @@
+@@ -49,60 +70,107 @@
  static const int nmaster     = 1;    /* number of clients in master area */
  static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
  
 -#include "layouts.c"
 +enum Layouts {
-+    	Tile,
-+    	Monocle,
-+    	GaplessGrid,
-+    	Deck,
++		Tile,
++		Monocle,
++		GaplessGrid,
++		Deck,
++		Floating,
 +};
  static const Layout layouts[] = {
 -	/* symbol     arrange function */
@@ -109,6 +104,7 @@
 +	[Monocle]     = { "[M]",      monocle },
 +	[GaplessGrid] = { "###",      gaplessgrid },
 +	[Deck]        = { "H[]",      deck },
++	[Floating]    = { "><>",      NULL },
  };
  
  /* key definitions */
@@ -166,9 +162,10 @@
 +	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 +	{ MODKEY|ShiftMask,             XK_h,      setmfact,       {.f = +0.05} },
 +	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[GaplessGrid]} },
-+	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[Tile]} },
++	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[Tile]} },
 +	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[Monocle]} },
 +	{ MODKEY,                       XK_n,      setlayout,      {.v = &layouts[Deck]} },
++	{ MODKEY,                       XK_v,      setlayout,      {.v = &layouts[Floating]} },
 +
 +	/* Focus manipulation */
  	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
@@ -222,7 +219,7 @@
  	TAGKEYS(                        XK_1,                      0)
  	TAGKEYS(                        XK_2,                      1)
  	TAGKEYS(                        XK_3,                      2)
-@@ -112,25 +183,39 @@
+@@ -112,25 +180,39 @@
  	TAGKEYS(                        XK_7,                      6)
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)
