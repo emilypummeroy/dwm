@@ -19,8 +19,21 @@ options:
 
 ${OBJ}: config.h config.mk
 
+init:
+	@echo creating config.h from config.def.h
+	@cp config.def.h config.h
+
+clear:
+	@echo clearing config.h and config.h.rej
+	-rm config.h config.h.rej
+
 config.h:
-	cp config.def.h $@
+	@echo creating $@ from config.def.h and patches/config.h.diff
+	@patch -ui patches/config.h.diff config.def.h -o $@
+
+save:
+	@echo saving config patch as patches/config.h.diff
+	diff -u config.def.h config.h >patches/config.h.diff
 
 dwm: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
@@ -48,4 +61,4 @@ uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
 
-.PHONY: all options clean dist install uninstall
+.PHONY: all options clean dist install uninstall clear save init
