@@ -1,5 +1,5 @@
 --- config.def.h	2023-02-10 17:55:16.913136277 +1100
-+++ config.h	2023-02-15 13:39:14.942563299 +1100
++++ config.h	2023-02-15 17:38:57.259221369 +1100
 @@ -1,25 +1,26 @@
  /* See LICENSE file for copyright and license details. */
  
@@ -42,10 +42,12 @@
  };
  static const unsigned int alphas[][3]      = {
  	/*               fg      bg        border     */
-@@ -31,14 +32,40 @@
+@@ -31,14 +32,48 @@
  /* tagging */
  static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
  
++#define TERMINAL_CLASS "Alacritty", NULL
++#define ZOOM_CLASS "zoom", "zoom"
 +#define SCRATCH_TITLE "scratch"
 +#define PROCS_TITLE "processes"
 +#define FILES_TITLE "files"
@@ -54,11 +56,12 @@
 +#define MIXER_TITLE "mixer"
 +#define NET_TITLE "network"
 +#define DEV_TITLE "devices"
++#define BROWSER_CLASS "firefox", "Navigator"
 +#define DASH_TAG (1 << 8)
 +#define ORG_TAG (1 << 7)
 +#define WORK_TAG (1 << 6)
-+#define ZOOM_TAG (1 << 5)
 +#define MAIN_TAGS ~(DASH_TAG | ORG_TAG | WORK_TAG)
++
  static const Rule rules[] = {
  	/* xprop(1):
  	 *	WM_CLASS(STRING) = instance, class
@@ -67,26 +70,31 @@
 -	/* class      instance    title       tags mask     isfloating   monitor */
 -	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 -	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
-+	/* class       instance      title                      tags mask     isfloating   monitor */
-+	{ "Alacritty", NULL,         SCRATCH_TITLE,             0,            1,           -1 },
-+	{ "Alacritty", NULL,         PROCS_TITLE,               0,            1,           -1 },
-+	{ "Alacritty", NULL,         FILES_TITLE,               0,            1,           -1 },
++	/* class       instance      title                      tags mask     isfloating   monitor  dynamic*/
++	{ TERMINAL_CLASS,            SCRATCH_TITLE,             0,            1,           -1 },
++	{ TERMINAL_CLASS,            PROCS_TITLE,               0,            1,           -1 },
++	{ TERMINAL_CLASS,            FILES_TITLE,               0,            1,           -1 },
 +	{ "Slack",     NULL,         NULL,                      1 << 1,       0,           -1 },
-+	{ "Alacritty", NULL,         EDITOR_TITLE,              0,            1,           -1 },
-+	{ "Alacritty", NULL,         MUSIC_TITLE,               DASH_TAG,     1,           -1 },
-+	{ "Alacritty", NULL,         MIXER_TITLE,               DASH_TAG,     1,           -1 },
-+	{ "Alacritty", NULL,         NET_TITLE,                 DASH_TAG,     1,           -1 },
-+	{ "Alacritty", NULL,         DEV_TITLE,                 DASH_TAG,     1,           -1 },
-+	{ "zoom",      NULL,         NULL,                      ZOOM_TAG,     1,           -1 },
-+	{ "zoom",      NULL,         "Zoom Meeting",            ZOOM_TAG,     0,           -1 },
-+	{ "zoom",      NULL,         "Zoom - Licensed Account", ZOOM_TAG,     0,           -1 },
-+	{ "zoom",      NULL,         "Chat",                    ZOOM_TAG,     0,           -1 },
-+	{ "zoom",      NULL,         "Participants",            ZOOM_TAG,     0,           -1 },
-+	{ "zoom",      NULL,         "Settings",                ZOOM_TAG,     0,           -1 },
++	{ TERMINAL_CLASS,            EDITOR_TITLE,              0,            1,           -1 },
++	{ TERMINAL_CLASS,            MUSIC_TITLE,               DASH_TAG,     1,           -1 },
++	{ TERMINAL_CLASS,            MIXER_TITLE,               DASH_TAG,     1,           -1 },
++	{ TERMINAL_CLASS,            NET_TITLE,                 DASH_TAG,     1,           -1 },
++	{ TERMINAL_CLASS,            DEV_TITLE,                 DASH_TAG,     1,           -1 },
++	{ TERMINAL_CLASS,            DEV_TITLE,                 DASH_TAG,     1,           -1 },
++	{ BROWSER_CLASS,             "Calendar",                ORG_TAG,      1,           -1 },
++	{ BROWSER_CLASS,             "Inbox",                   ORG_TAG,      1,           -1 },
++
++	/* Dynamic rules */
++	{ ZOOM_CLASS,                NULL,                      WORK_TAG,     1,           -1,        1 },
++	{ ZOOM_CLASS,                "Zoom Meeting",            WORK_TAG,     0,           -1,        1 },
++	{ ZOOM_CLASS,                "Zoom - Licensed Account", WORK_TAG,     0,           -1,        1 },
++	{ ZOOM_CLASS,                "Chat",                    WORK_TAG,     0,           -1,        1 },
++	{ ZOOM_CLASS,                "Participants",            WORK_TAG,     0,           -1,        1 },
++	{ ZOOM_CLASS,                "Settings",                WORK_TAG,     0,           -1,        1 },
  };
  
  #include "gaplessgrid.c"
-@@ -49,60 +76,107 @@
+@@ -49,60 +84,107 @@
  static const int nmaster     = 1;    /* number of clients in master area */
  static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
  
@@ -225,7 +233,7 @@
  	TAGKEYS(                        XK_1,                      0)
  	TAGKEYS(                        XK_2,                      1)
  	TAGKEYS(                        XK_3,                      2)
-@@ -112,25 +186,39 @@
+@@ -112,25 +194,39 @@
  	TAGKEYS(                        XK_7,                      6)
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)
