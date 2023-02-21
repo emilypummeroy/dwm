@@ -29,7 +29,7 @@ clear:
 
 config.h:
 	@echo creating $@ from config.def.h and patches/config.h.diff
-	@patch -ui patches/config.h.diff config.def.h -o $@
+	@patch --merge -ui patches/config.h.diff config.def.h -o $@
 
 save:
 	@echo saving config patch as patches/config.h.diff
