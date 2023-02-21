@@ -1,5 +1,5 @@
---- config.def.h	2023-02-10 17:55:16.913136277 +1100
-+++ config.h	2023-02-15 17:38:57.259221369 +1100
+--- config.def.h	2023-02-21 19:12:23.998354029 +1100
++++ config.h	2023-02-21 19:26:32.452727244 +1100
 @@ -1,25 +1,26 @@
  /* See LICENSE file for copyright and license details. */
  
@@ -94,9 +94,9 @@
  };
  
  #include "gaplessgrid.c"
-@@ -49,60 +84,107 @@
- static const int nmaster     = 1;    /* number of clients in master area */
+@@ -50,60 +85,106 @@
  static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
  
 -#include "layouts.c"
 +enum Layouts {
@@ -151,8 +151,7 @@
 +static const char *editorcmd[]  = { "alacritty", "-t", EDITOR_TITLE, "-e", "kake", NULL };
  
  #include "focusurgent.c"
- static Key keys[] = {
-+
+ static const Key keys[] = {
  	/* modifier                     key        function        argument */
 -	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 -	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
@@ -233,7 +232,7 @@
  	TAGKEYS(                        XK_1,                      0)
  	TAGKEYS(                        XK_2,                      1)
  	TAGKEYS(                        XK_3,                      2)
-@@ -112,25 +194,39 @@
+@@ -113,25 +194,39 @@
  	TAGKEYS(                        XK_7,                      6)
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)
@@ -244,7 +243,7 @@
  
  /* button definitions */
  /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
- static Button buttons[] = {
+ static const Button buttons[] = {
  	/* click                event mask      button          function        argument */
 -	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 -	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
