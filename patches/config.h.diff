@@ -1,5 +1,5 @@
---- config.def.h	2023-02-21 19:12:23.998354029 +1100
-+++ config.h	2023-02-24 14:10:08.780540613 +1100
+--- config.def.h	2023-02-24 14:36:13.221482089 +1100
++++ config.h	2023-02-24 17:41:04.877194645 +1100
 @@ -1,25 +1,26 @@
  /* See LICENSE file for copyright and license details. */
  
@@ -94,7 +94,7 @@
  };
  
  #include "gaplessgrid.c"
-@@ -50,60 +85,108 @@
+@@ -50,60 +85,109 @@
  static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
  static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
  
@@ -204,8 +204,8 @@
 +	{ MODKEY,                       XK_l,      zoom,           {0} },
 +	{ MODKEY,                       XK_e,      swapfocus,      {0} },
 +	{ MODKEY,                       XK_f,      togglefollow,   {0} },
-+	{ MODKEY,                       XK_minus,  setlayout,      {.v = &layouts[Tile]} },
-+	{ MODKEY,                       XK_minus,  winview,        {0} },
++	{ MODKEY,                       XK_equal,  setlayout,      {.v = &layouts[Tile]} },
++	{ MODKEY,                       XK_equal,  winview,        {0} },
 +	{ MODKEY,                       XK_u,      focusurgent,    {0} },
  	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
  	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
@@ -225,6 +225,7 @@
 +	{ MODKEY,              XK_a,      zoom,           {0} },
 +	{ MODKEY|ShiftMask,    XK_d,      pushdown,       {0} },
 +	{ MODKEY|ShiftMask,    XK_s,      pushup,         {0} },
++	{ MODKEY,              XK_minus,  view,           {0} },
 +
 +	/* Tags and views */
 +	{ MODKEY|ALTKEY,                XK_0,      view,           {.ui = 0 } },
@@ -234,7 +235,7 @@
  	TAGKEYS(                        XK_1,                      0)
  	TAGKEYS(                        XK_2,                      1)
  	TAGKEYS(                        XK_3,                      2)
-@@ -113,25 +196,39 @@
+@@ -113,25 +197,39 @@
  	TAGKEYS(                        XK_7,                      6)
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)
