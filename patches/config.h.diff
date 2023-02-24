@@ -1,5 +1,5 @@
 --- config.def.h	2023-02-21 19:12:23.998354029 +1100
-+++ config.h	2023-02-21 19:26:32.452727244 +1100
++++ config.h	2023-02-24 14:10:08.780540613 +1100
 @@ -1,25 +1,26 @@
  /* See LICENSE file for copyright and license details. */
  
@@ -94,7 +94,7 @@
  };
  
  #include "gaplessgrid.c"
-@@ -50,60 +85,106 @@
+@@ -50,60 +85,108 @@
  static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
  static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
  
@@ -142,6 +142,7 @@
 -static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 -static const char *termcmd[]  = { "st", NULL };
 +static const char *lockcmd[]    = { "slock", NULL };
++static const char *xrandrcmd[]  = { "xrandr", "--auto", NULL };
 +static const char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_norm_bg, "-nf", col_norm_fg, "-sb", col_sel_bg, "-sf", col_sel_fg, NULL };
 +static const char *scratchcmd[] = { "alacritty", "-t", SCRATCH_TITLE, NULL };
 +static const char *browsercmd[] = { "firefox", "https://duckduckgo.com", NULL };
@@ -167,6 +168,7 @@
 +	{ MODKEY|ALTKEY,                XK_u,      spawn,          {.v = editorcmd } },
 +	{ MODKEY|ALTKEY,                XK_i,      spawn,          {.v = filescmd } },
 +	{ MODKEY|ALTKEY,                XK_p,      spawn,          {.v = procscmd } },
++	{ MODKEY|ALTKEY,                XK_e,      spawn,          {.v = xrandrcmd } },
 +
 +	/* Layout manipulation */
  	{ MODKEY,                       XK_b,      togglebar,      {0} },
@@ -232,7 +234,7 @@
  	TAGKEYS(                        XK_1,                      0)
  	TAGKEYS(                        XK_2,                      1)
  	TAGKEYS(                        XK_3,                      2)
-@@ -113,25 +194,39 @@
+@@ -113,25 +196,39 @@
  	TAGKEYS(                        XK_7,                      6)
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)
