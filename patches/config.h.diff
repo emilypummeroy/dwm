@@ -1,5 +1,5 @@
 --- config.def.h	2023-02-24 14:36:13.221482089 +1100
-+++ config.h	2023-02-27 18:42:26.797015102 +1100
++++ config.h	2023-02-28 20:00:21.701738506 +1100
 @@ -1,25 +1,26 @@
  /* See LICENSE file for copyright and license details. */
  
@@ -145,7 +145,7 @@
 +static const char *xrandrcmd[]  = { "xrandr", "--auto", NULL };
 +static const char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_norm_bg, "-nf", col_norm_fg, "-sb", col_sel_bg, "-sf", col_sel_fg, NULL };
 +static const char *scratchcmd[] = { "alacritty", "-t", SCRATCH_TITLE, NULL };
-+static const char *browsercmd[] = { "firefox", "-new-window", "https://duckduckgo.com", NULL };
++static const char *browsercmd[] = { "firefox", "-new-window", NULL };
 +static const char *procscmd[]   = { "alacritty", "-t", PROCS_TITLE, "-o", "window.dimensions.columns=80", "-o", "window.dimensions.lines=30", "-e", "htop", NULL };
 +static const char *filescmd[]   = { "alacritty", "-t", FILES_TITLE, "-o", "window.dimensions.columns=80", "-o", "window.dimensions.lines=30", "-e", "ranger", NULL };
 +static const char *termcmd[]    = { "alacritty", NULL };
