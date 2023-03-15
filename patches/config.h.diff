@@ -1,5 +1,5 @@
 --- config.def.h	2023-02-24 14:36:13.221482089 +1100
-+++ config.h	2023-02-28 20:00:21.701738506 +1100
++++ config.h	2023-03-15 14:20:06.054931161 +1100
 @@ -1,25 +1,26 @@
  /* See LICENSE file for copyright and license details. */
  
@@ -42,7 +42,7 @@
  };
  static const unsigned int alphas[][3]      = {
  	/*               fg      bg        border     */
-@@ -31,14 +32,48 @@
+@@ -31,14 +32,49 @@
  /* tagging */
  static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
  
@@ -87,6 +87,7 @@
 +	/* Dynamic rules */
 +	{ ZOOM_CLASS,                NULL,                      WORK_TAG,     1,           -1,        1 },
 +	{ ZOOM_CLASS,                "Zoom Meeting",            WORK_TAG,     0,           -1,        1 },
++	{ ZOOM_CLASS,                "Zoom Webinar",            WORK_TAG,     0,           -1,        1 },
 +	{ ZOOM_CLASS,                "Zoom - Licensed Account", WORK_TAG,     0,           -1,        1 },
 +	{ ZOOM_CLASS,                "Chat",                    WORK_TAG,     0,           -1,        1 },
 +	{ ZOOM_CLASS,                "Participants",            WORK_TAG,     0,           -1,        1 },
@@ -94,7 +95,7 @@
  };
  
  #include "gaplessgrid.c"
-@@ -50,60 +85,109 @@
+@@ -50,60 +86,109 @@
  static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
  static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
  
@@ -235,7 +236,7 @@
  	TAGKEYS(                        XK_1,                      0)
  	TAGKEYS(                        XK_2,                      1)
  	TAGKEYS(                        XK_3,                      2)
-@@ -113,25 +197,39 @@
+@@ -113,25 +198,39 @@
  	TAGKEYS(                        XK_7,                      6)
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)
