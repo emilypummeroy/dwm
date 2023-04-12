@@ -1,5 +1,5 @@
 --- config.def.h	2023-02-24 14:36:13.221482089 +1100
-+++ config.h	2023-04-04 10:29:15.090428533 +1000
++++ config.h	2023-04-12 12:00:09.260139087 +1000
 @@ -1,25 +1,26 @@
  /* See LICENSE file for copyright and license details. */
  
@@ -42,10 +42,13 @@
  };
  static const unsigned int alphas[][3]      = {
  	/*               fg      bg        border     */
-@@ -31,14 +32,51 @@
- /* tagging */
- static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+@@ -29,16 +30,61 @@
+ };
  
+ /* tagging */
+-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
++static const char *tags[] = { "1", "#", "[]", "<>", "%", "//", ">", "8", "9" };
++
 +#define TERMINAL_CLASS "Alacritty", NULL
 +#define ZOOM_CLASS "zoom", "zoom"
 +#define SCRATCH_TITLE "scratch"
@@ -57,12 +60,14 @@
 +#define NET_TITLE "network"
 +#define DEV_TITLE "devices"
 +#define BROWSER_CLASS "firefox", "Navigator"
-+#define DASH_TAG (1 << 8)
-+#define ORG_TAG (1 << 7)
++#define TERM_TAG (1 << 2)
++#define DASH_TAG (1 << 4)
++#define ORG_TAG (1 << 5)
 +#define TICKET_TAG (1 << 6)
-+#define ZOOM_TAG (1 << 5)
++#define ZOOM_TAG (1 << 7)
++#define SPECIAL_TAGS ~(DASH_TAG | ORG_TAG | TICKET_TAG)
 +#define MAIN_TAGS ~(DASH_TAG | ORG_TAG | TICKET_TAG | ZOOM_TAG)
-+
+ 
  static const Rule rules[] = {
  	/* xprop(1):
  	 *	WM_CLASS(STRING) = instance, class
@@ -71,33 +76,39 @@
 -	/* class      instance    title       tags mask     isfloating   monitor */
 -	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 -	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
-+	/* class       instance      title                      tags mask     isfloating   monitor  dynamic*/
-+	{ TERMINAL_CLASS,            SCRATCH_TITLE,             0,            1,           -1 },
-+	{ TERMINAL_CLASS,            PROCS_TITLE,               0,            1,           -1 },
-+	{ TERMINAL_CLASS,            FILES_TITLE,               0,            1,           -1 },
-+	{ "Slack",     NULL,         NULL,                      1 << 1,       0,           -1 },
-+	{ TERMINAL_CLASS,            EDITOR_TITLE,              0,            1,           -1 },
-+	{ TERMINAL_CLASS,            MUSIC_TITLE,               DASH_TAG,     1,           -1 },
-+	{ TERMINAL_CLASS,            MIXER_TITLE,               DASH_TAG,     1,           -1 },
-+	{ TERMINAL_CLASS,            NET_TITLE,                 DASH_TAG,     1,           -1 },
-+	{ TERMINAL_CLASS,            DEV_TITLE,                 DASH_TAG,     1,           -1 },
-+	{ TERMINAL_CLASS,            DEV_TITLE,                 DASH_TAG,     1,           -1 },
-+	{ BROWSER_CLASS,             "Calendar",                ORG_TAG,      1,           -1 },
-+	{ BROWSER_CLASS,             "Inbox",                   ORG_TAG,      1,           -1 },
-+	{ BROWSER_CLASS,             "JIG board",               TICKET_TAG,   1,           -1 },
++	/* class       instance      title                      tags mask      isfloating  monitor    dynamic*/
++	{ TERMINAL_CLASS,            SCRATCH_TITLE,             0,             1,          -1 },
++	{ TERMINAL_CLASS,            PROCS_TITLE,               0,             1,          -1 },
++	{ TERMINAL_CLASS,            FILES_TITLE,               0,             1,          -1 },
++	{ "Slack",     NULL,         NULL,                      1 << 1,        0,          -1 },
++	{ TERMINAL_CLASS,            EDITOR_TITLE,              0,             1,          -1 },
++	{ TERMINAL_CLASS,            MUSIC_TITLE,               DASH_TAG,      1,          -1 },
++	{ TERMINAL_CLASS,            MIXER_TITLE,               DASH_TAG,      1,          -1 },
++	{ TERMINAL_CLASS,            NET_TITLE,                 DASH_TAG,      1,          -1 },
++	{ TERMINAL_CLASS,            DEV_TITLE,                 DASH_TAG,      1,          -1 },
++    { "code-oss",  "code-oss",   NULL,                      TERM_TAG << 1, 0,          -1 },
++
++	{ BROWSER_CLASS,             "Calendar",                ORG_TAG,       1,          -1 },
++	{ BROWSER_CLASS,             "Inbox",                   ORG_TAG,       1,          -1 },
++	{ BROWSER_CLASS,             "JIG board",               TICKET_TAG,    1,          -1 },
++	{ BROWSER_CLASS,             "Opsgenie - Alerts",       TICKET_TAG,    1,          -1 },
++	{ TERMINAL_CLASS,            "JIG",                     TERM_TAG,      0,          -1 },
++	{ TERMINAL_CLASS,            "jfe",                     TERM_TAG,      0,          -1 },
++	{ TERMINAL_CLASS,            "jira",                    TERM_TAG,      0,          -1 },
++	{ TERMINAL_CLASS,            "jira",                    TERM_TAG,      0,          -1 },
 +
 +	/* Dynamic rules */
-+	{ ZOOM_CLASS,                NULL,                      ZOOM_TAG,     1,           -1,        1 },
-+	{ ZOOM_CLASS,                "Zoom Meeting",            ZOOM_TAG,     0,           -1,        1 },
-+	{ ZOOM_CLASS,                "Zoom Webinar",            ZOOM_TAG,     0,           -1,        1 },
-+	{ ZOOM_CLASS,                "Zoom - Licensed Account", ZOOM_TAG,     0,           -1,        1 },
-+	{ ZOOM_CLASS,                "Chat",                    ZOOM_TAG,     0,           -1,        1 },
-+	{ ZOOM_CLASS,                "Participants",            ZOOM_TAG,     0,           -1,        1 },
-+	{ ZOOM_CLASS,                "Settings",                ZOOM_TAG,     0,           -1,        1 },
++	{ ZOOM_CLASS,                NULL,                      ZOOM_TAG,      1,          -1,        1 },
++	{ ZOOM_CLASS,                "Zoom Meeting",            ZOOM_TAG,      0,          -1,        1 },
++	{ ZOOM_CLASS,                "Zoom Webinar",            ZOOM_TAG,      0,          -1,        1 },
++	{ ZOOM_CLASS,                "Zoom - Licensed Account", ZOOM_TAG,      0,          -1,        1 },
++	{ ZOOM_CLASS,                "Chat",                    ZOOM_TAG,      0,          -1,        1 },
++	{ ZOOM_CLASS,                "Participants",            ZOOM_TAG,      0,          -1,        1 },
++	{ ZOOM_CLASS,                "Settings",                ZOOM_TAG,      0,          -1,        1 },
  };
  
  #include "gaplessgrid.c"
-@@ -50,60 +88,109 @@
+@@ -50,60 +96,109 @@
  static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
  static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
  
@@ -238,7 +249,7 @@
  	TAGKEYS(                        XK_1,                      0)
  	TAGKEYS(                        XK_2,                      1)
  	TAGKEYS(                        XK_3,                      2)
-@@ -113,25 +200,39 @@
+@@ -113,25 +208,39 @@
  	TAGKEYS(                        XK_7,                      6)
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)
